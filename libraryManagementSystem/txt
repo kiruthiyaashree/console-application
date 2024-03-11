@@ -1,0 +1,4 @@
+
+static arraylist for authorids ===> use of static 
+-static implies that the variable declared as static is shared among all the classes not between the particular instances (objects) i.e they are associated with the author class itself rather than to any specific author instances.
+-changes in this arraylist will be reflected on all the class that access it .
