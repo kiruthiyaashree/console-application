@@ -1,54 +1,93 @@
 package libraryManagementSystem;
-import java.util.*;
+
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String args[]){
+        int role,choice;
         Scanner scanner = new Scanner(System.in);
-        Patron patron = new Patron();
-        Author author = new Author();
-        Book book = new Book();
 
-        int choice;
+        do{
+            System.out.println("enter the role\n1.Admin\n2.Patron");
+            role = scanner.nextInt();
+            scanner.nextLine();
 
-        do {
-            try {
-                System.out.println("\n1. New Patron Register\n2. New Author entry\n3. New Book Entry\n4. Transaction\n5. Exit");
+            if(role ==1 )
+            {
+                Admin admin = new Admin();
+                System.out.println("enter the admin name");
+                String adminName = scanner.nextLine();
+                System.out.println("enter the admin password");
+                String adminPassword = scanner.nextLine();
+                boolean validAdmin = admin.validAdminLogin(adminName,adminPassword);
+                if(!validAdmin)
+                {
+                    System.out.println("wrong admin credentials");
+                }
+                else{
+                    //login with  credentials
+                    //adding books
+                    //search the books , authors , patrons , display book list
+                    System.out.println("successfully admin logged in !");
+                    Book book = new Book();
+                    System.out.println("enter the choice\n1.add the book\n2.display the booklist\n3.search the book\n4.search author\n5.display the author list \n6.remove book");
+                    choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            book.setBookDetails();
+                            System.out.println(book.getBookName()+" "+book.getAuthorName());
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                }
+            }
+            else{
+                System.out.println("enter the choice\n1.Login\n2.Register");
                 choice = scanner.nextInt();
-
+                scanner.nextLine();
+                Patron patron = new Patron();
+                //display book list to search book , borrow it , retrun date validation 
                 switch (choice) {
                     case 1:
-                        patron.setDetails();
-                        System.out.println("Patron ID: " + patron.getPatronId());
-                        System.out.println("Patron Name: " + patron.getPatronName());
-                        System.out.println("Patron Email: " + patron.getPatronEmail());
-                        System.out.println("Patron Phone Number: " + patron.getPatronPhoneNumber());
+                        System.out.println("enter the name");
+                        String name = scanner.nextLine();
+                        System.out.println("enter the password");
+                        String password = scanner.nextLine();
+                        boolean validPatron = patron.patronLogin(name, password);
+                        if(!validPatron)
+                        {
+                            System.out.println("invalid user details");
+                        }
+                        else{
+                            System.out.println("successfully logged in");
+                            //Borrowing the books
+                        }
                         break;
                     case 2:
-                        author.setAuthorDetails();
-                        System.out.println("author name : "+author.getAuthorName());
-                        System.out.println("author id : "+author.getAuthorId());
-
+                    //register
+                        System.out.println("enter your name");
+                        name = scanner.nextLine();
+                        System.out.println("enter your password");
+                        password = scanner.nextLine();
+                        System.out.print("Enter email: ");
+                        String email = scanner.nextLine();
+                        System.out.print("Enter address: ");
+                        String address = scanner.nextLine();
+                        System.out.print("Enter phone number: ");
+                        String phoneNumber = scanner.next(); 
+                        patron.setDetails(name,password, email, address, phoneNumber);
+                        System.out.println(patron.getPatronName() + " "+ patron.getPatronId());
                         break;
                     case 3:
-                        boolean validAuthorId = book.setBookDetails();
-                        if(!validAuthorId) {
-                            System.out.println("enter valid author Id");
-                            continue;
-                        }
-                        System.out.println("book name :"+ book.getBookName());
-                        break;
-                    case 5:
                         System.out.println("Exiting...");
                         break;
                     default:
-                        System.out.println("Invalid choice!");
+                        System.out.println("invalid choice");
                         break;
                 }
-            } catch (NoSuchElementException e) {
-                System.out.println("Invalid input! Please enter a valid integer.");
-                choice = 0;
-            }
-        } while (choice != 5);
-        scanner.close();
+        }
+        }while(role != 3);
     }
 }

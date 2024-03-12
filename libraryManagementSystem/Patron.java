@@ -1,27 +1,24 @@
 package libraryManagementSystem;
 
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class Patron {
     private String name;
     private int id;
     private String email;
-    private String address,phoneNumber;
+    private String address,phoneNumber,password;
     private static int nextId=0;
-
-    public void setDetails()
+    public static HashMap<String,String> credentials = new HashMap<>();
+    public void setDetails(String n,String p,String email,String addr,String phn)
     {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        name = scanner.nextLine();
-        System.out.print("Enter email: ");
-        email = scanner.nextLine();
-        System.out.print("Enter address: ");
-        address = scanner.nextLine();
-        System.out.print("Enter phone number: ");
-        phoneNumber = scanner.next();
+        this.name = n;
+        this.password = p;
+        this.email = email;
+        this.address =addr;
+        this.phoneNumber = phn;
+        credentials.put(name,p);
+        
         this.id = nextId++;
-        // scanner.close();
     }
     public String getPatronName()
     {
@@ -41,7 +38,15 @@ public class Patron {
     }
     public int getPatronId()
     {
-        //returning patron id 
         return id;
+    }
+    public boolean patronLogin(String name,String password)
+    {
+        String passVerification = credentials.get(name);
+        if( passVerification == null || !passVerification.equals(password))
+        {
+            return false;
+        }
+        return true;
     }
 }
