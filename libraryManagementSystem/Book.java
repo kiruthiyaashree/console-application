@@ -2,33 +2,35 @@ package libraryManagementSystem;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Book {
     private int ISBN;
     private String name;
     private int publishedYear;
     private String genre,authorName;
-    public static ArrayList<Integer> bookISBNs = new ArrayList<>();
-    public static ArrayList<String> bookNamesList = new ArrayList<>();
-    public static ArrayList<String> authorNameList = new ArrayList<>();
+    private boolean avaliablity;
+    public static ArrayList<Book> books = new ArrayList<>();
+
     Random random = new Random();
-    public void setBookDetails()
+    public Book(){
+    }
+    public Book(String name,String authorName,int publishedYear,String genre)
     {
-        Scanner sc = new Scanner(System.in);
         this.ISBN  =random.nextInt(1000);
-        bookISBNs.add(ISBN);
-        System.out.println("enter the book name");
-        name = sc.nextLine();
-        bookNamesList.add(name);
-        System.out.println("enter the author name");
-        authorName = sc.nextLine();
-        authorNameList.add(authorName);
-        System.out.println("enter the publisehd year");
-        publishedYear = sc.nextInt();
-        sc.nextLine();
-        System.out.println("enter the genre");
-        genre = sc.nextLine();
+        this.name = name;
+        this.authorName = authorName;
+        this.publishedYear=publishedYear;
+        this.genre = genre;
+        avaliablity = true;
+       
+    }
+    public void setAvaliability(boolean a)
+    {
+        avaliablity = a;
+    }
+    public void addBook(Book book)
+    {
+        books.add(book);
     }
     public int getBookISBN()
     {
@@ -42,12 +44,31 @@ public class Book {
     {
         return name;
     }
-    public int publishedYear()
+    public int getpublishedYear()
     {
         return publishedYear;
     }
     public String getBookGenre()
     {
         return genre;
+    }
+    public boolean getAvaliability()
+    {
+        return avaliablity;
+    }
+    public ArrayList<Book> getBookList()
+    {
+        return books;
+    }
+    public void removeBook(int isbnNumber)
+    {
+        for(int i=0;i<books.size();i++)
+        {
+            if(books.get(i).getBookISBN() == isbnNumber)
+            {
+                books.remove(i);
+                return ;     
+            }
+        }
     }
 }
